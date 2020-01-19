@@ -63,7 +63,7 @@ class Quiz extends React.Component {
       question: questions[0]
     })
   }
- 
+
   checkRestart(question) {
     if (question.restart) {
       this.restartQuiz();
@@ -71,19 +71,22 @@ class Quiz extends React.Component {
       this.nextQuestion();
     }
   }
-/**
- * перед переходом к следующему вопросу сохраняе результаты текущего вопроса и присаваем id для следующего
- * @param {string} value 
- */
+  /**
+   * перед переходом к следующему вопросу сохраняе результаты текущего вопроса и присаваем id для следующего
+   * @param {string} value 
+   */
   nextQuestion(value) {
     const id = this.state.curIndex;
-    this.saveResults(questions[id].id, value);
+    // Не надо записывать в результат вопросы типа Info
+    if (value !== undefined) {
+      this.saveResults(questions[id].id, value);
+    }
     this.changeId(id);
   }
-/**
- * в сохраненном массиве ответов проверяем сответсвие условию для блока вопрсов с типом Condition
- * @param {object} condition 
- */
+  /**
+   * в сохраненном массиве ответов проверяем сответсвие условию для блока вопрсов с типом Condition
+   * @param {object} condition 
+   */
   checkCondition(condition) {
     let conditionComplete = false;
     const conditionQuestion = this.results.find((elem) => elem.id === condition.questionId);
@@ -106,13 +109,14 @@ class Quiz extends React.Component {
     let nextId = id + 1;
     let nextQuestion = questions[nextId];
 
-    // Если вопросы закончились, надо показать финальный экран
+    // Если вопросы закончились, надо показать финальный экран и отправить результат на сервер
     if (!nextQuestion) {
       nextQuestion = {
         type: Types.info,
         text: 'Спасибо, что прошли опрос!',
         restart: true
       };
+      this.sendResultsOnServer();
     }
 
     // Если следующий вопрос типа Condition, необходимо записать результат в память и перейти к следующему
@@ -138,6 +142,13 @@ class Quiz extends React.Component {
     this.results.push({
       id, value
     });
+  }
+
+  /**
+   * Так как работы с сервером нет, просто выводим результаты в консоль
+   */
+  sendResultsOnServer() {
+    console.log(this.results);
   }
 
   render() {
