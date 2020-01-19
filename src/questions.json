@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "type": "info",
+    "text": "Добро пожаловать!"
+  },
+  {
+    "id": 2,
+    "type": "single",
+    "text": "Сколько Вам лет?",
+    "answers": [
+      "Меньше 18",
+      "19-25",
+      "26-35",
+      "36-55",
+      "Больше 56"
+    ]
+  },
+  {
+    "id": 3,
+    "type": "condition",
+    "condition": {
+      "questionId": 2,
+      "sign": "equal",
+      "value": 0
+    }
+  },
+  {
+    "id": 4,
+    "type": "single",
+    "relationId": 3,
+    "text": "Ваше любимое мороженое?",
+    "answers": [
+      "Эскимо",
+      "Пломбир",
+      "Рожок"
+    ]
+  },
+  {
+    "id": 5,
+    "type": "open",
+    "relationId": 3,
+    "text": "Опишите, почему"
+  },
+  {
+    "id": 6,
+    "type": "condition",
+    "condition": {
+      "questionId": 2,
+      "sign": "notequal",
+      "value": 0
+    }
+  },
+  {
+    "id": 7,
+    "type": "info",
+    "relationId": 6,
+    "restart": true,
+    "text": "Извините, опрос только для детей."
+  }
+]

@@ -1,0 +1,9 @@
+.question-container {
+  background-color: #64A8D1;
+  margin: 0 auto;
+  width: 600px;
+  height: 300px;
+  border: 1px solid #0969A2;
+  border-radius: 10px;
+  position: relative;
+}
